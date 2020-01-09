@@ -1,13 +1,13 @@
 # vwatch 
 
-<p align="center">
+<p align="left">
   <img width="150" src="https://github.com/rajatsc/vwatch/blob/master/public/img/logo/logo.png">
 </p>
 
 [![Build Status](https://travis-ci.com/rajatsc/vwatch.svg?branch=master)](https://travis-ci.com/rajatsc/vwatch)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-vwatch let's you watch youtube videos in sync with others. You can create permanent rooms, add your friends to these rooms, organize videos into playlist, and chat while enjoying a stream of youtube videos together. It is built using Node.js, Express, Mongoose and Socket.io.
+vwatch let's you watch youtube videos in sync with others. You can create permanent rooms, add your friends to these rooms, organize videos into playlist, and chat while enjoying a stream of youtube videos together. It is built using Node.js, Express, Mongoose and Socket.io. [Try vwatch](https://vwatch0.herokuapp.com)
 
 
 ## Features
