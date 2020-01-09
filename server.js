@@ -55,12 +55,11 @@ if (process.env.NODE_ENV === 'development') {
 
 //session and passport
 
-/*
+
 if (process.env.NODE_ENV === 'production'){
 	app.set('trust proxy', 1) // trust first proxy
 	session.sessionMiddleware.cookie.secure = true // serve secure cookies
 }
-*/
 
 app.use(session.sessionMiddleware);
 
