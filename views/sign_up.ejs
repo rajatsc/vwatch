@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<title>Sign Up</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	<link rel="stylesheet" href="/css/auth.css">
+</head>
+
+<body>
+
+	  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand pl-5" href="../">
+        <img src="/img/logo/logo.svg" width="40" height="40" alt="">
+        <span>
+          VWATCH
+        </span>  
+    </a>
+  
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+  
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+  <ul class="navbar-nav ml-auto">
+    
+    <li class="nav-item">
+      <a class="nav-link px-4" href="#">
+          <i class="fa fa-code"></i> Code
+      </a>
+    </li>
+    
+    <li class="nav-item px-4">
+      <a class="nav-link" href="sign_in">
+          <i class="fa fa-sign-in"></i> Sign In
+      </a>
+    </li>   
+  
+  </ul>
+  </div>
+</nav>
+
+
+
+<div class="signup-form">	
+    <form action="/users/register" method="post">
+		<h2>Create Account</h2>
+		
+		<div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" name="first" class="form-control" placeholder="First name" />
+                </div>
+            </div><!-- /.col -->
+            
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" name="last" class="form-control" placeholder="Last name" />
+                </div>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+        
+        <div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-user"></i></span>
+				<input type="text" class="form-control" name="username" placeholder="Username" required="required">
+			</div>
+        </div>
+        
+        <div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-paper-plane"></i></span>
+				<input type="email" class="form-control" name="email" placeholder="Email Address" required="required">
+			</div>
+        </div>
+		<div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+				<input type="password" class="form-control" name="password" placeholder="Password" required="required">
+			</div>
+        </div>
+		<div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon">
+					<i class="fa fa-lock"></i>
+					<i class="fa fa-check"></i>
+				</span>
+				<input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" required="required">
+			</div>
+        </div>        
+		<div class="form-group">
+            <button type="submit" class="btn btn-secondary btn-block btn-lg">Sign Up</button>
+        </div>
+    </form>
+	<div class="text-center">Already have an account? <a href="sign_in">Login here</a>.</div>
+</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+	<script>
+		$('#password, #confirm_password').on('keyup', function () {
+  			if ($('#password').val() == $('#confirm_password').val()) {
+    			$('#message').html('Matching').css('color', 'green');
+  			} else 
+    			$('#message').html('Not Matching').css('color', 'red');
+			});
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<title>Room | <%= title %></title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+  <script type="text/javascript"> (function() { var css = document.createElement('link'); css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
+  <link rel="stylesheet" href="/css/room.css">
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+
+  <div class="alert alert-top" id="alert-top" role="alert">
+
+  </div>
+
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top sticky-offset">
+
+  <a class="navbar-brand pl-5" href="#">
+        <span>
+          <%= title %>
+        </span>
+    </a>
+  
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+  
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+        <li class="nav-item">
+            <a class="nav-link" href="/users/current">
+                <i class="fa fa-user"></i> Profile
+            </a>
+        </li>
+                     
+      <li class="nav-item">
+        <a class="nav-link" href="#logoutModal" data-toggle = "modal" data-target= "#logoutModal">
+            <i class="fa fa-sign-out-alt"></i> Logout
+        </a>
+      </li>
+
+    </ul>
+  </div>
+
+
+
+</nav>
+
+
+<div class="container-fluid">
+    <div class="row">
+            <div class="col-lg-6 col-12 mt-3">
+                <div class="fluid-container" id="video-card">
+                    
+                        <div class="container-fluid" id="video">
+                          <script>
+                            function onPlayerReady(event) {
+                                event.target.cueVideoById("<%= playlist_array[current_video] %>");
+                              }
+                          </script>
+                        </div>    
+                
+                <div class="fluid-container">
+                    <div class="row first-row mt-2">
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-6">
+                              <button type="button" id="playAndPause">    
+                                  <i class="fa fa-play"></i>
+                              </button>
+                              <button type="button" id="muteAndUnmute">
+                                  <i class="fa fa-volume-up"></i>
+                              </button>
+                              <button type="button" id="step_backward">    
+                                  <i class="fa fa-step-backward"></i>
+                              </button>
+                              <button type="button" id="step_forward">
+                                  <i class="fa fa-step-forward"></i>
+                              </button>
+                            </div>
+                          </div>   
+                        </div>    
+                    </div>
+                </div>
+                
+                
+                </div>
+                
+                
+ 
+                
+            </div>
+            
+
+
+            <div class="col-lg-4 col-sm-8 col-12 mt-3">
+                <div class="card" id="chat-card">
+                    <div class="card-header">
+                        Chat
+                    </div>
+                    
+                    <div class="chat-message">
+                        <ul class="chat" id="chat-ul">                   </ul>    
+                    </div>
+                  </div>
+
+                                        <div class="fluid-container mt-3">
+                    <div class="row">
+                        <div class="col-9">
+                            <div class="form-group mb-0">
+                                <textarea class="form-control" id="myMessage" rows="2" placeholder="Type your message here..."></textarea>
+                            </div>
+                        </div>
+                        <div class="col-3 d-flex">
+                            <div class="container justify-content-center align-self-center">
+                                <button type="button" id="sendMessage" class="btn btn-primary" onclick="onClickSendMessageButton()">Send</button>
+                            </div>
+                        </div>    
+                    </div>    
+                </div>  
+
+              
+                
+  
+                
+            </div>
+            
+            <div class="col-lg-2 col-sm-4 col-12 mt-3">
+                <div class="card h-100" id="users-card">
+                    
+                    <div class="card-header" id="user-card-header">
+                        <div class="fluid-container mx-0">
+                          <div class="row">
+                            <div class="col-md-8 px-0">
+                              Members
+                              <span class="badge badge-success" id="online_users">
+                                1 Online
+                              </span>
+                             </div>
+
+                             <div class="col-md-4 px-0">
+                              <div container="fluid-container px-0 py-0">
+                            
+                            <button type="button" class="btn btn-info btn-circle" data-toggle="modal" data-target="#addMemberModal" title="Add User">
+                                <i class="fa fa-user-plus"></i>
+                            </button>
+                            
+                            <button type="button" class="btn btn-danger btn-circle" data-toggle="modal" data-target="#leaveRoomModal" title="Leave Room">
+                              <i class="fa fa-user-times"></i>
+                            </button>
+
+                            </div> 
+                             </div> 
+                          </div>
+                        </div>      
+                        
+                    </div>
+                
+                    
+                    <ul class="list-group list-group-flush friend-list" id="members-ul">
+                    
+                    <% for (var i = 0; i < members_array.length; i++){ %>
+                        <a href="#" data-toggle="modal" data-target="#makeMeHostModal" class="list-group-item d-flex" id=<%= members_array[i].userName + "-item"%>>
+                        <img src="/img/avatars/<%= members_array[i].avatar %>.png" alt="">
+                        <div class="w-100">
+                        <div class="user-name small"><%= members_array[i].name.first%> <%= members_array[i].name.last%></div>
+                        <% if (members_array[i].userName === owner) { %>
+                          <div class="text-muted small" id=<%= members_array[i].userName + "-role"%>>@<%= members_array[i].userName%>
+                            <span class="mx-auto text-dark">
+                              <i class="fa fa-user"></i>
+                            </span>
+                          </div>
+                        <% } else { %>
+                          <div class="text-muted small" id=<%= members_array[i].userName + "-role"%>>@<%= members_array[i].userName%></div>
+                        <% } %>
+                        </div>
+                        <span class="ml-auto text-muted float-right" id=<%= members_array[i].userName + "-status"%>>
+                        <i class="fa fa-circle"></i>
+                        </span>
+                        </a>
+                    
+                      <% } %>
+
+              
+            </ul>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+
+<!---  Alerts -->
+
+<div class="myAlert-bottom alert" id="alert-bottom">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+</div>
+
+<!--
+<div class="myAlert-top alert alert-success">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>Success!</strong> Indicates a successful or positive action.
+</div>
+-->
+
+
+
+<!---- Multi-item Carousel ------>
+
+
+<div class="container mt-3">
+      <div class="card">
+      <div class="card-header">
+        Playlist
+        <span class="float-right"> 
+          <a data-toggle="modal" data-target="#addVideoToPlaylist" title="Add Video"><i class="fa fa-plus-square" style="font-size:18px;color: green"></i></a>
+          <a data-toggle="modal" data-target="#deletePlaylist" title="Delete playlist"><i class="fa fa-trash" style="font-size:18px;color:red"></i></a>
+         </span> 
+      </div>
+      <div class="card-body">
+<div class="container">
+  <div class="row">
+    <div class="MultiCarousel" data-items="1,3,5,6" data-slide="1" id="MultiCarousel"  data-interval="1000">
+            <div class="MultiCarousel-inner" id="video_playlist">
+
+              <% for (var i = 0; i < playlist_array.length; i++){ %>
+                <div class="item" id=<%= playlist_array[i] + "-item"%>> 
+                <div class="pad15">
+                            <% if (i !== 0 ){ %>
+                            <a onclick="deleteVideo(this.id)" id=<%= playlist_array[i] + "-remove"%> class=
+                            "float-right"><i class="fa fa-times-circle" style="font-size:18px;color:red"></i> 
+                            </a>
+                            <% } else {%>
+                              <a id=<%= playlist_array[i] + "-remove"%> class="float-right"><i class="fa fa-times-circle" style="font-size:18px;color:green"></i> 
+                            </a>
+                            <% } %>
+                            <% if (i === current_video){ %>
+                              <img src=<%= "https://img.youtube.com/vi/" + playlist_array[i] + "/0.jpg"%> id="<%= playlist_array[i]%>" class="video_img ImageBorder" onclick="playVideo(this.id)">
+                            <% } else { %>
+                                <img src=<%= "https://img.youtube.com/vi/" + playlist_array[i] + "/0.jpg"%> id="<%= playlist_array[i]%>" class="video_img" onclick="playVideo(this.id)">
+                            <% } %>
+                        </div>
+                      </div>
+                      <% } %>
+              
+            </div>
+            <button class="btn btn-primary leftLst" id="left-sort"><</button>
+            <button class="btn btn-primary rightLst">></button>
+        </div>
+     </div>   
+  </div>
+</div>
+</div>
+</div>
+
+<!---Logout modal-->
+
+<div class="modal" id="logoutModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header"><h4>Logout <i class="fa fa-lock"></i></h4></div>
+      <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
+      <div class="modal-footer"><a href="/users/logout" class="btn btn-primary btn-block">Logout</a></div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--- Add Member modal -->
+
+<div class="modal" id="addMemberModal" onsubmit="return validateForm()" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header"><h4>Enter a UserName</h4></div>
+      <div class="modal-body">
+          <form id="addMemberForm">
+  <div class="form-group">
+    <input type="text" class="form-control" id="addMemberInput" placeholder="username">
+  </div>
+</form>
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-primary mr-auto" id="addMemberButton" data-dismiss="modal" onclick="onClickAddMemberButton()">Add</button>
+          <button type="submit" class="btn btn-primary" data-dismiss="modal" id="closeAddMemberButton">Close</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<!--- Leave room Modal -->
+
+<div class="modal" id="leaveRoomModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header"><h4>Leave Room<i class="fa fa-lock"></i></h4></div>
+      <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to leave room?</div>
+      <div class="modal-footer"><a class="btn btn-danger btn-block" data-dismiss="modal" onclick="onClickLeaveRoomButton()">Leave</a></div>
+    </div>
+  </div>
+</div>
+
+
+<!---- addVideoToPlaylist ---->
+
+<div class="modal" id="addVideoToPlaylist" onsubmit="return validateVideoId()" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header"><h4>Enter a Video ID</h4></div>
+      <div class="modal-body">
+          <form id="addVideoForm">
+  <div class="form-group">
+    <input type="text" class="form-control" id="addVideoInput" placeholder="video id">
+  </div>
+</form>
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-primary mr-auto" id="addVideoButton" onclick="onClickAddVideoButton()" data-dismiss="modal">Add</button>
+          <button type="submit" class="btn btn-primary" data-dismiss="modal" id="closeAddVideoButton">Close</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<!---- deletePlaylist ------>
+
+<div class="modal" id="deletePlaylist" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header"><h4>Delete Playlist<i class="fa fa-lock"></i></h4></div>
+      <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to delete the entire playlist?</div>
+      <div class="modal-footer"><a class="btn btn-danger btn-block" onclick="onClickDeletePlaylistButton()" data-dismiss="modal">Delete</a></div>
+    </div>
+  </div>
+</div>
+  
+
+<!--- scripts ---->
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript" src="/js/room.js"></script>
+  <script type="text/javascript" src="/js/video.js"></script>
+</body>
+
+
+
+
+

@@ -1,0 +1,41 @@
+html, body {
+    height: 100%;
+    position: relative;
+    background-color: #fff;
+}
+
+body{
+	padding-bottom: 70px;
+}
+
+#home{
+    text-align:center;
+    background-color: #fff;
+}
+
+#content{
+    padding-top: 1%;
+}
+
+.brand-name{
+    color: #000; 
+    display: inline-block;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+
+.lead{
+    color: #000;
+}
+
+
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 15px;
+   width: 100%;
+   background-color: #fff;
+   color: white;
+   text-align: center;
+}

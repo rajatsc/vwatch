@@ -1,0 +1,57 @@
+body {
+  background: #F1F3FA;
+}
+
+.navbar-nav > li{
+  padding-left:5px;
+  padding-right:5px;
+}
+
+
+.profile-stat-title {
+    color: #7f90a4;
+    font-size: 25px;
+    text-align: center;
+}
+.uppercase {
+    text-transform: uppercase!important;
+}
+
+.profile-stat-text {
+    color: #5b9bd1;
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.profile-content {
+  background: #fff;
+  max-height: 560px;
+  overflow-y: scroll;
+  min-height: 560px;
+}
+
+.sticky-offset {
+    top: 0px;
+}
+
+.img-parent {
+   width: 80%;
+}
+.room-item{
+    display: block;    
+}
+
+#room_header{
+  background-color: #5cb85c;
+}
+
+.delete_room{
+  cursor: pointer;
+}
+
+.alert.alert-top {
+  margin-bottom: 0;
+  border-radius: 0;
+  display:none;
+}

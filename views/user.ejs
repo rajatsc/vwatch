@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<title>Home | <%= first_name %> <%= last_name %></title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	<link rel="stylesheet" href="/css/user.css">
+</head>
+
+
+<body>
+
+  <div class="alert alert-top" id="alert-top" role="alert">
+</div>
+
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top sticky-offset">
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <i class="fa fa-home"></i> Home
+            </a>
+        </li>
+        
+      <li class="nav-item">
+        <a class="nav-link" href="#logoutModal" data-toggle = "modal" data-target= "#logoutModal">
+            <i class="fa fa-sign-out"></i> Logout
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+<div class="container">
+    <div class="row profile">
+        <div class="col-md-4">
+            <div class="profile-sidebar">
+                
+                
+                <div class="card mt-3">
+                    <div class="card-body text-center">
+                        <img src = <%= avatar_link %> alt="" class="img-fluid rounded-circle mb-2" width="64" height="64">
+                        <h5 class="card-title mb-0"><%= first_name%> <%= last_name %></h5>
+                        <div class="small text-muted mb-0">@<%= user_name%></div>
+                        <div class="small mb-2 text-muted text-center"><i class="fa fa-calendar"></i> Joined <%= month %> <%= year %></div>
+                        
+                        <div class="uppercase profile-stat-title"><%= total_rooms %></div>
+                        <div class="uppercase profile-stat-text">Rooms</div>
+                        
+                        <div class="profile-userbuttons mt-3">
+                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#createRoomModal">Create a Room</button>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-8">
+            <div class="profile-content mt-3">
+                <div class="container-fluid">
+                    <div class="row">
+                    <div class="container text-center" id="room_header">  
+                      <p class="mb-0">
+                        <strong>My Rooms</strong>
+                      </p>
+                    </div>
+
+        <div class="col-lg-8 col-md-10 col-12 mx-auto mt-2">
+
+
+        <div class="list-group">
+
+        <% for (var i = 0; i < rooms_array.length; i++) { %>
+            <div class="card mt-3">
+              <div class="card-header">
+                  <%= rooms_array[i].roomName %>
+                  <span class="float-right delete_room" id=<%= rooms_array[i].urlName + "-remove"%>>
+                    <i class="fa fa-times"></i>
+                  </span>
+              </div>
+              <a href="/rooms/<%= rooms_array[i].urlName %>">
+              <div class="card-body d-flex justify-content-between align-items-center">
+                <div class="flex-column">
+                    <div>
+                      <p><small class="text-muted">Admin: @<%= rooms_array[i].owner_userName%></small></p>
+                      <span class="badge badge-info badge-pill">
+                          <%= rooms_array[i].members.length %> 
+                          <% if (rooms_array[i].members.length > 1) {%>
+                            Members
+                          <%} else {%>
+                            Member
+                          <% } %>    
+                      </span>
+                    </div>  
+                </div>
+                
+                <div class="image-parent">
+                    <img src="https://img.youtube.com/vi/<%= rooms_array[i].playlist[rooms_array[i].current_video]%>/default.jpg" %> class="img-fluid" alt="quixote">
+                </div>
+          </div>
+        </a>
+        </div>
+        <% } %>    
+        
+</div>
+</div>
+</div>
+
+                         
+                    </div>    
+                </div>
+            </div>
+        </div>
+        
+        
+        
+</div>
+
+<!---Logout modal-->
+
+<div class="modal" id="logoutModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header"><h4>Logout <i class="fa fa-lock"></i></h4></div>
+      <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
+      <div class="modal-footer">
+        <form class="spacer" action="/users/logout" method="get">
+          <input class="submit" type="submit" value="Logout" />
+        </form>
+</div>
+    </div>
+  </div>
+</div>
+
+<!--- Create room modal -->
+
+<div class="modal" id="createRoomModal" onsubmit="return validateForm()" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header"><h4>Enter a Room Name</h4></div>
+      <div class="modal-body">
+          <form id="createRoomForm" method="post" action="/rooms/create">
+  <div class="form-group">
+    <input type="text" class="form-control" name="room_name" id="createRoomInput" placeholder="Room Name">
+  </div>
+</form>
+      </div>
+      <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" id="createRoomButton" form="createRoomForm">Submit</button>
+        </div>
+    </div>
+  </div>
+</div>
+ 
+  
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript" src="/js/user.js"></script>
+
+	</script>
+</body>
