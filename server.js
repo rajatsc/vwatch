@@ -59,13 +59,14 @@ if (process.env.NODE_ENV === 'development') {
 if (process.env.NODE_ENV === 'production'){
 	app.set('trust proxy', 1) // trust first proxy
 
+  /*
   //in production environment redirect all http to https
   app.use(function(request, response){
     if(!request.secure){
       response.redirect("https://" + request.headers.host + request.url);
     }
   });
-
+  */
 }
 
 app.use(session.sessionMiddleware);

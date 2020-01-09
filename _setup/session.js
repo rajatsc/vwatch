@@ -22,9 +22,11 @@ var session_config = {
 	}
 }
 
+/*
 if (process.env.NODE_ENV === 'production'){
 	session_config.cookie.secure = true; //serve secure cookies 
 }
+*/
 
 
 module.exports.sessionMiddleware = expressSession(session_config);
