@@ -24,8 +24,8 @@ vwatch let's you watch youtube videos in sync with others. You can create perman
 
 
 <p align="center">
-  <img width="300" src="https://github.com/rajatsc/vwatch/blob/master/public/img/readme/profile.png">
-  <img width="450" src="https://github.com/rajatsc/vwatch/blob/master/public/img/readme/room.png">
+  <img width="450" src="https://github.com/rajatsc/vwatch/blob/master/public/img/readme/profile.png">
+  <img width="700" src="https://github.com/rajatsc/vwatch/blob/master/public/img/readme/room.png">
 </p>
 
 
