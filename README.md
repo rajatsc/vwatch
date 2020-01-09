@@ -19,3 +19,16 @@ vwatch let's you watch youtube videos in sync with others. You can create perman
 * Uses [MongoDB](https://www.mongodb.com/) as database and [mongoose](https://mongoosejs.com/) as object document modeler (ODM) to interact with MongoDB
 * Stores session in MongoDB using [connect-mongo](https://github.com/jdesboeufs/connect-mongo); a MongoDB-based session store
 * Uses [Youtube IFrame Player API](https://developers.google.com/youtube/iframe_api_reference) to embed videos and control playback
+
+## Screenshots
+
+
+<p align="center">
+  <img width="300" src="https://github.com/rajatsc/vwatch/blob/master/public/img/readme/profile.png">
+  <img width="450" src="https://github.com/rajatsc/vwatch/blob/master/public/img/readme/room.png">
+</p>
+
+
+
+
+
