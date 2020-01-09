@@ -4,7 +4,6 @@ const expressSession = require('express-session')
 const connectMongo = require('connect-mongo');
 const path = require('path')
 const dotenv = require('dotenv');
-dotenv.config({ path: 'dev.env' });
 
 const MongoStore = connectMongo(expressSession);
 
@@ -16,9 +15,15 @@ var session_config = {
 	saveUninitialized: true,
 	resave: false,
 	cookie: {
+		secure: false,
+		httpOnly: true,
 		path: "/",
 		maxAge: 600000
 	}
+}
+
+if (process.env.NODE_ENV === 'production'){
+	session_config.cookie.secure = true; //serve secure cookies 
 }
 
 
