@@ -20,14 +20,6 @@
 * Stores session in MongoDB using [connect-mongo](https://github.com/jdesboeufs/connect-mongo); a MongoDB-based session store
 * Uses [Youtube IFrame Player API](https://developers.google.com/youtube/iframe_api_reference) to embed videos and control playback
 
-## Screenshots
-
-
-<p align="center">
-  <img width="450" src="https://github.com/rajatsc/vwatch/blob/master/public/img/readme/profile.png">
-  <img width="700" src="https://github.com/rajatsc/vwatch/blob/master/public/img/readme/room.png">
-</p>
-
 
 
 
