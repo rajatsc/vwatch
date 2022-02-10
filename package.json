@@ -22,7 +22,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.3.2",
     "mongoose": "^5.7.1",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
